@@ -18,25 +18,45 @@ const Button = styled.button`
 function App() {
   const [books, setBooks] = useState([]); 
   const [favourites, setFavourites] = useState([]); 
+  const [viewFavourites, setViewFavourites] = useState(false); 
 
-  async function handleSearch(query) {
-    const results = await searchBooks(query);
-    setBooks(results);
+  function handleSearch(query) {
+    searchBooks(query).then(function(results) {
+      setBooks(results);
+      // setViewFavourites(false);
+    });
   }
 
   function handleAddToFavourites(book) {
-    setFavourites([...favourites, book]);
+    setFavourites(function(prevFavourites) {
+      return [...prevFavourites, book];
+    });
   }
 
+  function toggleViewFavourites() {
+    setViewFavourites(function(prevViewFavourites) {
+      return !prevViewFavourites;
+    });
+  }
+
+  useEffect(function() {
+    searchBooks('a').then(function(results) {
+      setBooks(results);
+    });
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <Button>Favourite Books</Button>
+        <Button onClick={toggleViewFavourites}>
+          {viewFavourites ? 'Back to Search Results' : 'View Favourite Books'}
+        </Button>
       </header>
-      <SearchBar onSearch={handleSearch} />
-      <BookList books={books} onAddToFavourites={handleAddToFavourites} />
-      <BookList books={favourites} onAddToFavourites={() => {}} /> 
+      {!viewFavourites && <SearchBar onSearch={handleSearch} />}
+      <BookList 
+        books={viewFavourites ? favourites : books}
+        onAddToFavourites={viewFavourites ? function() {} : handleAddToFavourites}
+      />
     </div>
   );
 }
