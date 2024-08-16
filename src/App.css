@@ -50,3 +50,16 @@ header {
 .book-description {
   margin-top: 10px;
 }
+
+body.light-mode {
+  background-color: white;
+  color: black;
+  transition: 1s ease-in-out;
+}
+
+body.dark-mode {
+  background-color: black;
+  color: white;
+  transition: 1s ease-in-out;
+}
+
