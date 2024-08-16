@@ -14,7 +14,7 @@ header {
 
 
 .book-item {
-  display: flex;
+  display: flex; 
   margin-bottom: 20px;
   border: 1px solid #ddd;
   padding: 10px;
