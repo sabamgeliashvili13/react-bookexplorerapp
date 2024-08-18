@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import SearchBar from './components/search'; 
 import BookList from './components/bookList'; 
 import styled from 'styled-components';
@@ -82,35 +83,76 @@ function App() {
   }, [theme]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Button onClick={toggleViewFavourites}>
-          {viewFavourites ? 'Back to Search Results' : 'View Favourite Books'}
-        </Button>
-        <Button onClick={toggleTheme}>
-          Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
-        </Button>
-      </header>
-      {!viewFavourites && (
-        <>
-          <SearchBar onSearch={handleSearch} />
-          <BookList 
-            books={books.slice(startIndex, endIndex)}
-            onAddToFavourites={handleAddToFavourites}
-          />
+    <BrowserRouter>
+      <div className="App">
+        <header className="App-header">
+          <nav>
+            <Link to="/">Home</Link>
+            <div className='hover-stick'></div>
+            <Link to="/contact">Contact</Link>
+          </nav>
           <div>
-            <Button onClick={prevPage} disabled={currentPage === 1}>Previous</Button>
-            <Button onClick={nextPage} disabled={endIndex >= books.length}>Next</Button>
+            <Button onClick={toggleTheme}>
+              Switch to {theme === 'light' ? 'Dark' : 'Light'} Mode
+            </Button>
+                <Button onClick={toggleViewFavourites}>
+                  {viewFavourites ? 'Back to Search Results' : 'View Favourite Books'}
+                </Button>
           </div>
-        </>
-      )}
-      {viewFavourites && (
-        <BookList 
-          books={favourites}
-          onAddToFavourites={function() {}} 
-        />
-      )}
-    </div>
+        </header>
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <>
+                {!viewFavourites && (
+                  <>
+                    <SearchBar onSearch={handleSearch} />
+                    <BookList 
+                      books={books.slice(startIndex, endIndex)}
+                      onAddToFavourites={handleAddToFavourites}
+                    />
+                    <div>
+                      <Button onClick={prevPage} disabled={currentPage === 1}>Previous</Button>
+                      <Button onClick={nextPage} disabled={endIndex >= books.length}>Next</Button>
+                    </div>
+                  </>
+                )}
+                {viewFavourites && (
+                  <BookList 
+                    books={favourites}
+                    onAddToFavourites={function() {}} 
+                  />
+                )}
+              </>
+            } 
+          />
+          <Route 
+            path="/contact" 
+            element=
+            {<div className='contact-page'>
+              <div className='contact-box'>
+                <span> <i class="fa-solid fa-phone font-awesome-icon" ></i> +995 551 73 33 42</span>
+                <span> <i class="fa-solid fa-envelope font-awesome-icon"></i> Bookexplorer@gmail.com</span>
+                <span> <i class="fa-solid fa-location-dot font-awesome-icon"></i> Tbilisi,Abashidze street 34</span>
+                  </div>
+                <div className='map-container'>
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2979.108259612847!2d44.80354937589523!3d41.69659857126226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440ce457ded513%3A0x32ea02a26b6d1776!2zMzQg4YOc4YOY4YOZ4YOd4YOa4YOd4YOWIOGDkeGDkOGDoOGDkOGDl-GDkOGDqOGDleGDmOGDmuGDmOGDoSDhg6Xhg6Phg6nhg5AsIFRlbGF2aQ!5e0!3m2!1ska!2sge!4v1723997888835!5m2!1ska!2sge"
+                      width="100%"
+                      height="450"
+                      style={{ border: 0 }}
+                      allowFullScreen=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Google Map"
+                    ></iframe>
+              </div>
+            </div>} 
+          />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
