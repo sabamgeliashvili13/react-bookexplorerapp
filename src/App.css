@@ -27,9 +27,9 @@ nav a {
   font-size: 18px;
 }
 
-nav a:hover {
+/* nav a:hover {
   text-decoration: underline;
-}
+} */
 
 .book-item {
   display: flex; 
@@ -119,8 +119,31 @@ body.dark-mode {
 }
 
 .contact-box span:nth-child(1) {
- margin-right: 45px;
+ margin-right: 50px;
 }
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: white; 
+  padding: 10px;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px; 
+  background-color: black; 
+  transition: width 0.3s ease; 
+}
+
+.nav-link:hover::after {
+  width: 100%; 
+}
+
 
 
 @media (max-width: 600px) {

@@ -1,7 +1,6 @@
-import React from 'react';
-import '../App.css'
-import styled from 'styled-components';
-
+import React from "react";
+import "../App.css";
+import styled from "styled-components";
 
 const Button = styled.button`
   padding: 10px 20px;
@@ -14,14 +13,21 @@ const Button = styled.button`
   margin-top: 10px;
 `;
 
-
 const Book = ({ book, onAddToFavourites }) => {
   return (
-    <div className='book-item'>
-      <h3 className='book-title'>{book.volumeInfo.title}</h3>
-      <p className='book-authors'><strong>Author(s):</strong> {book.volumeInfo.authors?.join(', ')}</p>
-      <p className='book-description'>{book.volumeInfo.description}</p>
-      {book.volumeInfo.imageLinks && <img className='book-image' src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />}
+    <div className="book-item">
+      <h3 className="book-title">{book.volumeInfo.title}</h3>
+      <p className="book-authors">
+        <strong>Author(s):</strong> {book.volumeInfo.authors?.join(", ")}
+      </p>
+      <p className="book-description">{book.volumeInfo.description}</p>
+      {book.volumeInfo.imageLinks && (
+        <img
+          className="book-image"
+          src={book.volumeInfo.imageLinks.thumbnail}
+          alt={book.volumeInfo.title}
+        />
+      )}
       <Button onClick={() => onAddToFavourites(book)}>Add to Favorites</Button>
     </div>
   );
